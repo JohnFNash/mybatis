@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties" />
+	
+	<typeAliases>
+    	<!-- 使用包扫描的方式批量定义别名定以后别名等于类名,不区分大小写,
+    		  但是建议按照java命名规则来,首字母小写,以后每个单词的首字母大写
+        -->
+    	<package name="com.johnfnash.learn.mybatis.entity"/>
+    </typeAliases>
+	
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+	        <!-- config params as the following -->
+	        <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+	        <property name="helperDialect" value="mysql"/>
+	    </plugin>
+	</plugins>
+	
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理 -->
+			<transactionManager type="JDBC" />
+			<!-- 数据库连接池 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}"/>
+				<property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}" />
+                <property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 加载映射文件 -->
+    <mappers>
+    	<mapper resource="mappers/UserMapper.xml"/>
+    	<!-- 下面的好像不行 -->
+    	<!-- <package name="com.johnfnash.learn.mybatis.mapper"/> -->
+    </mappers>
+    
+</configuration>
